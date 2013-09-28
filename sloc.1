@@ -1,0 +1,30 @@
+.\" Process this file with
+.\" groff -man -Tascii sloc.1
+.\"
+.TH SLOC 1 "sloc-0.1" "" "General Commands Manual"
+.SH NAME
+sloc \- simple source-lines-of-code counter
+.SH SYNOPSIS
+.B sloc
+.RB [ \-v ]
+.RB [ \-h ]
+.RB [ file ]
+.RB [ ... ]
+.SH DESCRIPTION
+.B sloc
+is a simple program that counts the total number of lines of code in source
+files. It can count lines of code in the specified file(s), or in the current
+directory. This program currently understands over 20 languages, and can be
+easily extended by adding languages to the
+.I languages.h
+header file.
+.SH ARGUMENTS
+.TP
+.B \-v
+Print version information about the program and exit without counting the
+lines of code.
+.TP
+.B \-h
+Print usage information about the program, then exit.
+.SH AUTHOR
+Copyright (c) 2013 Brian Kubisiak <bkubisiak.git@gmail.com>
