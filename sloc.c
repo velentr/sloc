@@ -14,8 +14,6 @@
 #include "sloc.h"
 #include "languages.h"
 
-#define VERSION "0.1"
-
 int main(int argc, char **argv)
 {
     int             i;
@@ -207,8 +205,9 @@ void count_file(char *filename, sloc_t *counter, int lang)
             case ' ':
                 /* continue loop through line */
                 continue;
+            case '\r':      /* fallthrough */
             case '\n':
-                eol = 1; /* fallthrough */
+                eol = 1;    /* fallthrough */
             case '\0':
                 /* break pos switch */
                 break;
