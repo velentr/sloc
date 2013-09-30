@@ -1,7 +1,7 @@
 #ifndef _SLOC_H_
 #define _SLOC_H_
 
-#define VERSION "0.1.1"
+#define VERSION "0.1.2"
 
 #define MAX(a, b) ((a) > (b)) ? (a) : (b)
 
@@ -122,6 +122,16 @@ void count_folder(char *dirname, sloc_t *counts);
  *      counts  : the counted lines of code
  */
 void print_sloc(sloc_t *counts);
+
+/*
+ *  set_max_lens
+ *      sets the maximum lengths if the given strings are longer than the
+ *      given lengths
+ *  args:
+ *      @mems   : the member strings
+ *      @maxn   : the maximum lengths
+ */
+void set_max_lens(char mems[][BUFSIZ], int *maxn);
 
 /*
  *  add_sloc_item

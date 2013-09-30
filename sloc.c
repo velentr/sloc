@@ -10,15 +10,16 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <limits.h>
 
 #include "sloc.h"
 #include "languages.h"
 
 int main(int argc, char **argv)
 {
-    int             i;
-    char *          filename = NULL;
-    sloc_t          counts[NUM_LANGS];
+    int     i;
+    char *  filename = NULL;
+    sloc_t  counts[NUM_LANGS];
 
     for (i = 0; i < NUM_LANGS; i++)
     {
@@ -76,21 +77,20 @@ void count_lines(char *filename, sloc_t *counts)
     struct stat sb;
     int         lang;
 
-    if (stat(filename, &sb) != -1)
-    {
-        if (S_ISDIR(sb.st_mode) != 0)
-        {
-            count_folder(filename, counts);
-        }
-        else if ( S_ISREG(sb.st_mode) != 0 &&
-                  (lang = get_file_lang(filename)) != -1)
-        {
-            count_file(filename, counts + lang, lang);
-        }
-    }
-    else
+    if (stat(filename, &sb) == -1)
     {
         perror(filename);
+        return;
+    }
+
+    if (S_ISDIR(sb.st_mode) != 0)
+    {
+        count_folder(filename, counts);
+    }
+    else if ( S_ISREG(sb.st_mode) != 0 &&
+              (lang = get_file_lang(filename)) != -1)
+    {
+        count_file(filename, counts + lang, lang);
     }
 }
 
@@ -102,10 +102,7 @@ int strends_with(char *haystack, char *needle)
     {
         return 1;
     }
-    else
-    {
-        return 0;
-    }
+    return 0;
 }
 
 int get_file_lang(char *filename)
@@ -266,13 +263,11 @@ void count_folder(char *dirname, sloc_t *counts)
 
     while ((next = readdir(dp)) != NULL)
     {
-        if (*(next->d_name) == '.')
+        if (*(next->d_name) != '.')
         {
-            continue;
+            strncpy(path + idx, next->d_name, BUFSIZ - idx - 1);
+            count_lines(path, counts);
         }
-        path[idx] = '\0';
-        strncat(path, next->d_name, BUFSIZ - idx - 1);
-        count_lines(path, counts);
     }
 
     closedir(dp);
@@ -292,10 +287,7 @@ void print_sloc(sloc_t *counts)
         sizeof(STR_BLANK) - 1,
         sizeof(STR_FILE) - 1,
     };
-
     sloc_list_t *   lst = NULL;
-    sloc_list_t *   labels = NULL;
-    sloc_list_t *   total = NULL;
 
     tots.tot = 0;
     tots.code = 0;
@@ -316,35 +308,26 @@ void print_sloc(sloc_t *counts)
 
             /* check lengths of the entries */
             strcpy(s[IDX_LANG], langs[i].name);
-            maxn[IDX_LANG] = MAX(maxn[IDX_LANG], strlen(langs[i].name));
             snprintf(s[IDX_TOT], BUFSIZ, "%d", counts[i].tot);
-            maxn[IDX_TOT] = MAX(maxn[IDX_TOT], strlen(s[IDX_TOT]));
             snprintf(s[IDX_CODE], BUFSIZ, "%d", counts[i].code);
-            maxn[IDX_CODE] = MAX(maxn[IDX_CODE], strlen(s[IDX_CODE]));
             snprintf(s[IDX_COM], BUFSIZ, "%d", counts[i].com);
-            maxn[IDX_COM] = MAX(maxn[IDX_COM], strlen(s[IDX_COM]));
             snprintf(s[IDX_BLANK], BUFSIZ, "%d", counts[i].blank);
-            maxn[IDX_BLANK] = MAX(maxn[IDX_BLANK], strlen(s[IDX_BLANK]));
             snprintf(s[IDX_FILE], BUFSIZ, "%d", counts[i].files);
-            maxn[IDX_FILE] = MAX(maxn[IDX_FILE], strlen(s[IDX_FILE]));
+            set_max_lens(s, maxn);
 
             add_sloc_item(&lst, counts[i].code, s);
         }
     }
 
     strcpy(s[IDX_LANG], STR_TOT);
-    maxn[IDX_LANG] = MAX(maxn[IDX_LANG], strlen(STR_TOT));
     snprintf(s[IDX_TOT], BUFSIZ, "%d", tots.tot);
-    maxn[IDX_TOT] = MAX(maxn[IDX_TOT], strlen(s[IDX_TOT]));
     snprintf(s[IDX_CODE], BUFSIZ, "%d", tots.code);
-    maxn[IDX_CODE] = MAX(maxn[IDX_CODE], strlen(s[IDX_CODE]));
     snprintf(s[IDX_COM], BUFSIZ, "%d", tots.com);
-    maxn[IDX_COM] = MAX(maxn[IDX_COM], strlen(s[IDX_COM]));
     snprintf(s[IDX_BLANK], BUFSIZ, "%d", tots.blank);
-    maxn[IDX_BLANK] = MAX(maxn[IDX_BLANK], strlen(s[IDX_BLANK]));
     snprintf(s[IDX_FILE], BUFSIZ, "%d", tots.files);
-    maxn[IDX_FILE] = MAX(maxn[IDX_FILE], strlen(s[IDX_FILE]));
-    add_sloc_item(&total, tots.tot, s);
+    set_max_lens(s, maxn);
+
+    add_sloc_item(&lst, tots.tot, s);
 
     strcpy(s[IDX_LANG], STR_LANG);
     strcpy(s[IDX_TOT], STR_TOT);
@@ -352,15 +335,22 @@ void print_sloc(sloc_t *counts)
     strcpy(s[IDX_COM], STR_COM);
     strcpy(s[IDX_BLANK], STR_BLANK);
     strcpy(s[IDX_FILE], STR_FILE);
-    add_sloc_item(&labels, 0, s);
 
-    print_sloc_list(labels, maxn);
-    print_sloc_list(total, maxn);
+    add_sloc_item(&lst, INT_MAX, s);
+
     print_sloc_list(lst, maxn);
 
     free_sloc_list(lst);
-    free_sloc_list(labels);
-    free_sloc_list(total);
+}
+
+void set_max_lens(char mems[][BUFSIZ], int *maxn)
+{
+    int i;
+
+    for (i = 0; i < NUM_MEMBERS; i++)
+    {
+        maxn[i] = MAX(maxn[i], strlen(mems[i]));
+    }
 }
 
 void add_sloc_item(sloc_list_t **lst, int idx, char s[][BUFSIZ])
