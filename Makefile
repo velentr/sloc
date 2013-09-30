@@ -26,4 +26,4 @@ install: all
 	@echo "Installing binary..."
 	@install -Dm755 sloc $(DESTDIR)$(PREFIX)/bin/sloc
 	@echo "Installing man page..."
-	@install -Dm644 sloc.1 $(DESTDIR)$(MANDIR)/man8/sloc.1
+	@install -Dm644 sloc.1 $(DESTDIR)$(MANDIR)/man1/sloc.1
