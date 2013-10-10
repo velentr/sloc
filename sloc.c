@@ -21,6 +21,7 @@ int main(int argc, char **argv)
 {
     int     i;
     char *  filename = NULL;
+    int     lang;
     sloc_t  counts[NUM_LANGS];
 
     for (i = 0; i < NUM_LANGS; i++)
@@ -41,6 +42,16 @@ int main(int argc, char **argv)
         else if (strcmp(argv[i], "-h") == 0)
         {
             disp_usage(argv[0]);
+        }
+        else if (strcmp(argv[i], "-s") == 0)
+        {
+            if (++i == argc)
+            {
+                disp_usage(argv[0]);
+            }
+            filename = argv[i];
+            lang = get_lang_idx(filename);
+            count_stream(stdin, counts + lang, lang);
         }
         else
         {
@@ -72,6 +83,20 @@ void disp_usage(char *prog)
 {
     printf("usage: %s [-v] [-h] [file] [...]\n", prog);
     exit(EXIT_SUCCESS);
+}
+
+int get_lang_idx(char *name)
+{
+    int i;
+
+    for (i = 0; i < NUM_LANGS; i++)
+    {
+        if (strcmp(name, langs[i].name) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 void count_lines(char *filename, sloc_t *counts)
@@ -129,18 +154,22 @@ int get_file_lang(char *filename)
 void count_file(char *filename, sloc_t *counter, int lang)
 {
     FILE *  fp;
+
+    fp = fopen(filename, "r");
+    if (fp != NULL)
+    {
+        count_stream(fp, counter, lang);
+    }
+}
+
+void count_stream(FILE *fp, sloc_t *counter, int lang)
+{
     char    s[BUFSIZ];
     char    codeline = 0;
     char    comline = 0;
     char    comment = 0;
     char    eol = 0;
     char *  pos;
-
-    fp = fopen(filename, "r");
-    if (fp == NULL)
-    {
-        return;
-    }
 
     counter->files++;
 

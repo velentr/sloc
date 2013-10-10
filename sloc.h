@@ -62,6 +62,16 @@ void disp_version(void);
 void disp_usage(char *prog);
 
 /*
+ *  get_lang_idx
+ *      get the index of the language with the given name
+ *  args:
+ *      @name   : the name of the language to find
+ *  return:
+ *      returns the index of the given language, or -1 if it is not found
+ */
+int get_lang_idx(char *name);
+
+/*
  *  count_lines
  *      count the total number of sloc in the given file. if the given file
  *      is a directory, count the total number of lines in each file in the
@@ -96,14 +106,24 @@ int get_file_lang(char *filename);
 
 /*
  *  count_file
- *      count the number of lines of code in a given file, adding the counts
- *      to the given counter.
+ *      converts the given filename into a buffered file stream, then counts
+ *      the lines in the stream
  *  args:
  *      @filename   : the name of the file to count
  *      @counts     : the sloc counter to add to
  *      @lang       : the language to use
  */
 void count_file(char *filename, sloc_t *counts, int lang);
+
+/*
+ *  count_stream
+ *      counts the number of lines of code in the given file stream
+ *  args:
+ *      @fp     : a pointer to the stream to count
+ *      @counts : the sloc counter to add to
+ *      @lang   : the language to use
+ */
+void count_stream(FILE *fp, sloc_t *counts, int lang);
 
 /*
  *  count_folder
