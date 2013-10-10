@@ -23,9 +23,7 @@ typedef struct _lang_t
     char *eol;
 } lang_t;
 
-#define NUM_LANGS 40
-
-lang_t langs[NUM_LANGS] =
+lang_t langs[] =
 {
     {"Ada", {".adb", ".ads",}, NULL, NULL, "--",},
     {"Assembly", {".asm", ".s",}, NULL, NULL, ";",},

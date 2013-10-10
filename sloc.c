@@ -15,6 +15,8 @@
 #include "sloc.h"
 #include "languages.h"
 
+#define NUM_LANGS sizeof(langs) / sizeof(lang_t)
+
 int main(int argc, char **argv)
 {
     int     i;
