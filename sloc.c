@@ -4,6 +4,7 @@
  *      directory (including all subdirectories). code is easily modified to
  *      add new languages.
  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,10 +21,11 @@
 int main(int argc, char **argv)
 {
     int     i;
-    char *  filename = NULL;
-    int     lang;
+    int     numcounts = 0;
+    char *  pwd;
     sloc_t  counts[NUM_LANGS];
 
+    /* initilize all the count values to 0 */
     for (i = 0; i < NUM_LANGS; i++)
     {
         counts[i].tot = 0;
@@ -37,36 +39,45 @@ int main(int argc, char **argv)
     {
         if (strcmp(argv[i], "-v") == 0)
         {
+            /* version info */
             disp_version();
         }
         else if (strcmp(argv[i], "-h") == 0)
         {
+            /* help message */
             disp_usage(argv[0]);
         }
-        else if (strcmp(argv[i], "-s") == 0)
+        else if (strcmp(argv[i], "-t") == 0)
         {
+            /* check that the next argument exists */
             if (++i == argc)
             {
                 disp_usage(argv[0]);
             }
-            filename = argv[i];
-            lang = get_lang_idx(filename);
-            count_stream(stdin, counts + lang, lang);
+            /* tell program not to count pwd */
+            numcounts++;
+            /* count lines from stdin using the given language */
+            count_stdin(argv[i], counts);
         }
         else
         {
-            filename = argv[i];
-            count_lines(filename, counts);
+            /* tell program not to count pwd */
+            numcounts++;
+            /* count lines from the given file */
+            count_lines(argv[i], counts);
         }
     }
 
-    if (filename == NULL)
+    /* if no counts were performed, count the pwd */
+    if (numcounts == 0)
     {
-        filename = getcwd(NULL, 0);
-        count_lines(filename, counts);
-        free(filename);
+        /* pwd is dynamically allocated */
+        pwd = getcwd(NULL, 0);
+        count_lines(pwd, counts);
+        free(pwd);
     }
 
+    /* print the results */
     print_sloc(counts);
 
     return EXIT_SUCCESS;
@@ -81,7 +92,7 @@ void disp_version(void)
 
 void disp_usage(char *prog)
 {
-    printf("usage: %s [-v] [-h] [file] [...]\n", prog);
+    printf("usage: %s [-v] [-h] [-t lang] [file] [...]\n", prog);
     exit(EXIT_SUCCESS);
 }
 
@@ -160,6 +171,19 @@ void count_file(char *filename, sloc_t *counter, int lang)
     {
         count_stream(fp, counter, lang);
     }
+}
+
+void count_stdin(char *lang, sloc_t *counts)
+{
+    int idxlang;
+
+    idxlang = get_lang_idx(lang);
+    if (idxlang == -1)
+    {
+        fprintf(stderr, "error: '%s' is not a known language!\n", lang);
+        return;
+    }
+    count_stream(stdin, &counts[idxlang], idxlang);
 }
 
 void count_stream(FILE *fp, sloc_t *counter, int lang)

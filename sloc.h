@@ -1,7 +1,7 @@
 #ifndef _SLOC_H_
 #define _SLOC_H_
 
-#define VERSION "0.2.1"
+#define VERSION "0.3"
 
 #define MAX(a, b) ((a) > (b)) ? (a) : (b)
 
@@ -114,6 +114,16 @@ int get_file_lang(char *filename);
  *      @lang       : the language to use
  */
 void count_file(char *filename, sloc_t *counts, int lang);
+
+/*
+ *  count_stdin
+ *      counts the number of lines of code from the stdin stream using the
+ *      given language.
+ *  args:
+ *      @lang   : a string representing the language to use
+ *      @counts : the sloc counter to add to
+ */
+void count_stdin(char *lang, sloc_t *counts);
 
 /*
  *  count_stream
