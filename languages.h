@@ -50,7 +50,7 @@ lang_t langs[] =
     {"MATLAB", {".mat",}, "%{", "%}", "%",},
     {"Objective-C", {".m",}, "/*", "*/", "//",},
     {"OCaml", {".ml"}, "(*", "*)", NULL,},
-    {"Perl", {".pl", ".pm",}, NULL, NULL, "%",},
+    {"Perl", {".pl", ".pm",}, NULL, NULL, "#",},
     {"PHP", {".php",}, "/*", "*/", "//",},
     {"Prolog", {".pro",}, "/*", "*/", "%",},
     {"Python", {".py",}, "\"\"\"", "\"\"\"", "#",},
@@ -64,6 +64,7 @@ lang_t langs[] =
     {"Tcl", {".tcl",}, NULL, NULL, "#",},
     {"Vala", {".vala"}, "/*", "*/", "//",},
     {"Verilog", {".v", ".vh",}, "/*", "*/", "//",},
+    {"Vimscript", {".vim",}, NULL, NULL, "\""},
     {"VHDL", {".vhdl",}, NULL, NULL, "--",},
 };
 
