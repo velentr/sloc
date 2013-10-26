@@ -24,6 +24,7 @@ int main(int argc, char **argv)
     int     numcounts = 0;
     char *  pwd;
     sloc_t  counts[NUM_LANGS];
+    int     print_tots = 1;
 
     /* initilize all the count values to 0 */
     for (i = 0; i < NUM_LANGS; i++)
@@ -46,6 +47,11 @@ int main(int argc, char **argv)
         {
             /* help message */
             disp_usage(argv[0]);
+        }
+        else if (strcmp(argv[i], "-n") == 0)
+        {
+            /* don't print totals */
+            print_tots = 0;
         }
         else if (strcmp(argv[i], "-t") == 0)
         {
@@ -78,7 +84,7 @@ int main(int argc, char **argv)
     }
 
     /* print the results */
-    print_sloc(counts);
+    print_sloc(counts, print_tots);
 
     return EXIT_SUCCESS;
 }
@@ -92,7 +98,7 @@ void disp_version(void)
 
 void disp_usage(char *prog)
 {
-    printf("usage: %s [-v] [-h] [-t lang] [file] [...]\n", prog);
+    printf("usage: %s [-v] [-h] [-n] [-t lang] [file] [...]\n", prog);
     exit(EXIT_SUCCESS);
 }
 
@@ -328,7 +334,7 @@ void count_folder(char *dirname, sloc_t *counts)
     closedir(dp);
 }
 
-void print_sloc(sloc_t *counts)
+void print_sloc(sloc_t *counts, int print_tots)
 {
     int     i;
     sloc_t  tots;
@@ -374,15 +380,19 @@ void print_sloc(sloc_t *counts)
         }
     }
 
-    strcpy(s[IDX_LANG], STR_TOT);
-    snprintf(s[IDX_TOT], BUFSIZ, "%d", tots.tot);
-    snprintf(s[IDX_CODE], BUFSIZ, "%d", tots.code);
-    snprintf(s[IDX_COM], BUFSIZ, "%d", tots.com);
-    snprintf(s[IDX_BLANK], BUFSIZ, "%d", tots.blank);
-    snprintf(s[IDX_FILE], BUFSIZ, "%d", tots.files);
-    set_max_lens(s, maxn);
+    if (print_tots != 0)
+    {
+        strcpy(s[IDX_LANG], STR_TOT);
+        snprintf(s[IDX_TOT], BUFSIZ, "%d", tots.tot);
+        snprintf(s[IDX_CODE], BUFSIZ, "%d", tots.code);
+        snprintf(s[IDX_COM], BUFSIZ, "%d", tots.com);
+        snprintf(s[IDX_BLANK], BUFSIZ, "%d", tots.blank);
+        snprintf(s[IDX_FILE], BUFSIZ, "%d", tots.files);
+        set_max_lens(s, maxn);
 
-    add_sloc_item(&lst, tots.tot, s);
+        add_sloc_item(&lst, tots.tot, s);
+    }
+
 
     strcpy(s[IDX_LANG], STR_LANG);
     strcpy(s[IDX_TOT], STR_TOT);

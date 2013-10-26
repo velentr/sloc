@@ -1,7 +1,7 @@
 #ifndef _SLOC_H_
 #define _SLOC_H_
 
-#define VERSION "0.3"
+#define VERSION "0.3.1"
 
 #define MAX(a, b) ((a) > (b)) ? (a) : (b)
 
@@ -149,9 +149,10 @@ void count_folder(char *dirname, sloc_t *counts);
  *      prints the total number of sloc counted in a neat table, sorted
  *      according to the number of lines of code.
  *  args:
- *      counts  : the counted lines of code
+ *      counts      : the counted lines of code
+ *      print_tots  : whether or not to print the totals
  */
-void print_sloc(sloc_t *counts);
+void print_sloc(sloc_t *counts, int print_tots);
 
 /*
  *  set_max_lens

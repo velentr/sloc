@@ -1,13 +1,14 @@
 .\" Process this file with
 .\" groff -man -Tascii sloc.1
 .\"
-.TH SLOC 1 "sloc-0.3" "" "General Commands Manual"
+.TH SLOC 1 "sloc-0.3.1" "" "General Commands Manual"
 .SH NAME
 sloc \- simple source-lines-of-code counter
 .SH SYNOPSIS
 .B sloc
 .RB [ \-v ]
 .RB [ \-h ]
+.RB [ \-n ]
 .RB [ \-t
 .BR lang ]
 .RB [ file ]
@@ -28,6 +29,9 @@ lines of code.
 .TP
 .B \-h
 Print usage information about the program, then exit.
+.TP
+.B \-n
+When printing the number of lines of code, do not print the totals.
 .TP
 .B \-t lang
 Read code from stdin, using the given tag as the language name. If the
