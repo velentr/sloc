@@ -26,7 +26,7 @@ typedef struct _lang_t
 lang_t langs[] =
 {
     {"Ada", {".adb", ".ads",}, NULL, NULL, "--",},
-    {"Assembly", {".asm", ".s",}, NULL, NULL, ";",},
+    {"Assembly", {".asm", ".inc",}, NULL, NULL, ";",},
     {"C", {".c", ".h",}, "/*", "*/", "//",},
     {"C++", {".cc", ".hh",}, "/*", "*/", "//",},
     {"Clojure", {".clj", ".edn",}, NULL, NULL, ";",},
