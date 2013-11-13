@@ -23,6 +23,16 @@ typedef struct _lang_t
     char *eol;
 } lang_t;
 
+/*
+ *  should be easy to add a new language. The format is:
+ *
+ *      {lang_name, {ext1, ext2,}, begin_blk_com, end_blk_com, begin_ln_com,},
+ *
+ *  each of these should be strings. there can only be MAX_EXTS - 1 extensions
+ *  in that array, but you should be able to increase MAX_EXTS arbitrarily,
+ *  and all the arrays will be filled out with NULL pointers (i.e. no evil
+ *  side effects will be introduced).
+ */
 lang_t langs[] =
 {
     {"Ada", {".adb", ".ads",}, NULL, NULL, "--",},

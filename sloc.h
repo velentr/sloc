@@ -1,7 +1,7 @@
 #ifndef _SLOC_H_
 #define _SLOC_H_
 
-#define VERSION "0.3.1"
+#define VERSION "0.4.1"
 
 #define MAX(a, b) ((a) > (b)) ? (a) : (b)
 
@@ -81,6 +81,16 @@ int get_lang_idx(char *name);
  *      @counts     : the location to store the line counts
  */
 void count_lines(char *filename, sloc_t *counts);
+
+/*
+ *  get_stdin_filenames
+ *      get the list of files to count from standard input, one per line.
+ *      simple reads in each line and passes the string to the count_lines
+ *      function.
+ *  args:
+ *      @counts : the location to store the line counts
+ */
+void get_stdin_filenames(sloc_t *counts);
 
 /*
  *  strends_with

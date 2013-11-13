@@ -65,6 +65,13 @@ int main(int argc, char **argv)
             /* count lines from stdin using the given language */
             count_stdin(argv[i], counts);
         }
+        else if (strcmp(argv[i], "-s") == 0)
+        {
+            /* don't count pwd */
+            numcounts++;
+            /* get file list from stdin */
+            get_stdin_filenames(counts);
+        }
         else
         {
             /* tell program not to count pwd */
@@ -98,7 +105,7 @@ void disp_version(void)
 
 void disp_usage(char *prog)
 {
-    printf("usage: %s [-v] [-h] [-n] [-t lang] [file] [...]\n", prog);
+    printf("usage: %s [-v] [-h] [-n] [-t lang] [-s] [file] [...]\n", prog);
     exit(EXIT_SUCCESS);
 }
 
@@ -135,6 +142,22 @@ void count_lines(char *filename, sloc_t *counts)
               (lang = get_file_lang(filename)) != -1)
     {
         count_file(filename, counts + lang, lang);
+    }
+}
+
+void get_stdin_filenames(sloc_t *counts)
+{
+    char    name[BUFSIZ];
+    char *  nl;
+
+    while (fgets(name, BUFSIZ, stdin) != NULL)
+    {
+        nl = strchr(name, '\n');
+        if (nl != NULL)
+        {
+            *nl = '\0';
+        }
+        count_lines(name, counts);
     }
 }
 
@@ -192,6 +215,7 @@ void count_stdin(char *lang, sloc_t *counts)
     count_stream(stdin, &counts[idxlang], idxlang);
 }
 
+/* this method sucks - I should really rewrite it */
 void count_stream(FILE *fp, sloc_t *counter, int lang)
 {
     char    s[BUFSIZ];
