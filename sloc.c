@@ -130,7 +130,6 @@ void count_lines(char *filename, sloc_t *counts)
 
     if (stat(filename, &sb) == -1)
     {
-        perror(filename);
         return;
     }
 
@@ -210,7 +209,7 @@ void count_stdin(char *lang, sloc_t *counts)
     if (idxlang == -1)
     {
         fprintf(stderr, "error: '%s' is not a known language!\n", lang);
-        return;
+        exit(EXIT_FAILURE);
     }
     count_stream(stdin, &counts[idxlang], idxlang);
 }
@@ -342,7 +341,6 @@ void count_folder(char *dirname, sloc_t *counts)
 
     if ((dp = opendir(dirname)) == NULL)
     {
-        perror(dirname);
         return;
     }
 
@@ -451,7 +449,7 @@ void add_sloc_item(sloc_list_t **lst, int idx, char s[][BUFSIZ])
     if (new == NULL)
     {
         perror("malloc");
-        return;
+        exit(EXIT_FAILURE);
     }
     new->idx = idx;
     new->name = strdup(s[IDX_LANG]);
