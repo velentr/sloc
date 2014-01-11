@@ -7,7 +7,7 @@
 #ifndef _LANGUAGES_H_
 #define _LANGUAGES_H_
 
-#define MAX_EXTS 3
+#define MAX_EXTS 4
 
 typedef struct _lang_t
 {
@@ -38,7 +38,7 @@ lang_t langs[] =
     {"Ada", {".adb", ".ads",}, NULL, NULL, "--",},
     {"Assembly", {".asm", ".inc",}, NULL, NULL, ";",},
     {"C", {".c", ".h",}, "/*", "*/", "//",},
-    {"C++", {".cc", ".hh",}, "/*", "*/", "//",},
+    {"C++", {".cc", ".cpp", ".hh", ".hpp"}, "/*", "*/", "//",},
     {"Clojure", {".clj", ".edn",}, NULL, NULL, ";",},
     {"D", {".d",}, "/*", "*/", "//",},
     {"Eiffel", {".e",}, NULL, NULL, "--",},

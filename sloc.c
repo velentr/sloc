@@ -65,7 +65,7 @@ int main(int argc, char **argv)
             /* count lines from stdin using the given language */
             count_stdin(argv[i], counts);
         }
-        else if (strcmp(argv[i], "-s") == 0)
+        else if (strcmp(argv[i], "-") == 0)
         {
             /* don't count pwd */
             numcounts++;
@@ -105,7 +105,7 @@ void disp_version(void)
 
 void disp_usage(char *prog)
 {
-    printf("usage: %s [-v] [-h] [-n] [-t lang] [-s] [file] [...]\n", prog);
+    printf("usage: %s [-v] [-h] [-n] [-t lang] [-] [file] [...]\n", prog);
     exit(EXIT_SUCCESS);
 }
 
