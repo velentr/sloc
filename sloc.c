@@ -98,7 +98,7 @@ int main(int argc, char **argv)
 
 void disp_version(void)
 {
-    printf("sloc-"VERSION", (c) 2013 Brian Kubisiak, "
+    printf("sloc-"VERSION", (c) 2013-14 Brian Kubisiak, "
            "see LICENSE for details\n");
     exit(EXIT_SUCCESS);
 }

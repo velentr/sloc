@@ -36,12 +36,13 @@ typedef struct _lang_t
 lang_t langs[] =
 {
     {"Ada", {".adb", ".ads",}, NULL, NULL, "--",},
-    {"Assembly", {".asm", ".inc",}, NULL, NULL, ";",},
+    {"Assembly", {".asm", ".inc", ".s",}, NULL, NULL, ";",},
     {"C", {".c", ".h",}, "/*", "*/", "//",},
     {"C++", {".cc", ".cpp", ".hh", ".hpp"}, "/*", "*/", "//",},
     {"Clojure", {".clj", ".edn",}, NULL, NULL, ";",},
     {"D", {".d",}, "/*", "*/", "//",},
     {"Eiffel", {".e",}, NULL, NULL, "--",},
+    {"Emacs Lisp", {".el",}, NULL, NULL, ";;",},
     {"Erlang", {".erl", ".hrl",}, NULL, NULL, "%",},
     {"Forth", {".4th", ".fs",}, "( ", ")", "\\ ",},
     {"Fortran", {".f77", ".f95",}, NULL, NULL, "!",},
@@ -75,7 +76,7 @@ lang_t langs[] =
     {"Vala", {".vala"}, "/*", "*/", "//",},
     {"Verilog", {".v", ".vh",}, "/*", "*/", "//",},
     {"Vimscript", {".vim",}, NULL, NULL, "\""},
-    {"VHDL", {".vhdl",}, NULL, NULL, "--",},
+    {"VHDL", {".vhdl", ".vht", ".vhd"}, NULL, NULL, "--",},
 };
 
 #endif /* _LANGUAGES_H_ */
