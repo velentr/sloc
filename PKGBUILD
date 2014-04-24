@@ -1,6 +1,6 @@
 # Maintainer: Brian Kubisiak <bkubisiak.git@gmail.com>
 pkgname=sloc-git
-pkgver=0.4.2
+pkgver=0.4.3
 pkgrel=1
 pkgdesc="Simply count source lines of code"
 arch=('i686' 'x86_64')
