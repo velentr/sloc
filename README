@@ -1,0 +1,38 @@
+SLOC(1)                     General Commands Manual                      SLOC(1)
+
+
+
+NAME
+       sloc - simple source-lines-of-code counter
+
+SYNOPSIS
+       sloc [-v] [-h] [-n] [-t lang] [-] [file] [...]
+
+DESCRIPTION
+      sloc  is a simple program that counts the total number of lines of code in
+      source files. It can count lines of code in the specified file(s),  or  in
+      the  current  directory.  This program currently understands 40 languages,
+      and can be easily extended by adding languages to the  languages.h  header
+      file.
+
+ARGUMENTS
+      -v     Print version information about the program and exit without count‐
+             ing the lines of code.
+
+      -h     Print usage information about the program, then exit.
+
+      -n     When printing the number of lines of code, do not print the totals.
+
+      -t lang
+             Read code from stdin, using the given tag as the language name.  If
+             the language name is not recognized, print an error message.
+
+      -      Read  the  list  of filenames to count from standard input, one per
+             line.
+
+AUTHOR
+      Copyright (c) 2013-14 Brian Kubisiak <bkubisiak.git@gmail.com>
+
+
+
+                                    sloc-1.0                             SLOC(1)

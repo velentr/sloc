@@ -1,18 +1,18 @@
 # Maintainer: Brian Kubisiak <bkubisiak.git@gmail.com>
-pkgname=sloc-git
-pkgver=0.4.3
+pkgname=sloc
+pkgver=1.0
 pkgrel=1
 pkgdesc="Simply count source lines of code"
 arch=('i686' 'x86_64')
-url="http://69.69.108.139/gitweb"
+url="https://github.com/velentr/sloc.git"
 license=('MIT')
 depends=('glibc')
 makedepends=('git')
 install=
-source=(git+http://69.69.108.139/git/sloc.git)
+source=(git+https://github.com/velentr/sloc.git)
 md5sums=('SKIP')
 
-_gitroot="http://69.69.108.139/git/sloc.git"
+_gitroot="https://github.com/velentr/sloc.git"
 _gitname="sloc"
 
 build() {

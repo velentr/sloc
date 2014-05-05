@@ -1,7 +1,7 @@
 CC	?=	gcc
 PREFIX	?=	/usr
 MANDIR	=	$(PREFIX)/share/man
-CFLAGS	=	-march=native -O2 -c -Wall -Wstrict-prototypes -pedantic
+CFLAGS	=	-O2 -c -Wall -Wstrict-prototypes -pedantic
 OBJECTS	=	sloc.o
 
 CC_COLOR	=	\x1b[36m
