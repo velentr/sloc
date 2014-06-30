@@ -1,7 +1,7 @@
-# Maintainer: Brian Kubisiak <bkubisiak.git@gmail.com>
+# Maintainer: Brian Kubisiak <velentr.rc@gmail.com>
 pkgname=sloc
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Simply count source lines of code"
 arch=('i686' 'x86_64')
 url="https://github.com/velentr/sloc.git"
