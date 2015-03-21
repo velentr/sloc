@@ -1,7 +1,7 @@
 #ifndef _SLOC_H_
 #define _SLOC_H_
 
-#define VERSION "1.0"
+#define VERSION "1.1"
 
 #define MAX(a, b) ((a) > (b)) ? (a) : (b)
 
