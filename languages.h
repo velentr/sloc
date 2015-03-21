@@ -38,7 +38,7 @@ lang_t langs[] =
     {"Ada", {".adb", ".ads",}, NULL, NULL, "--",},
     {"Asm (Intel)", {".asm", ".inc",}, NULL, NULL, ";",},
     {"Asm (AT&T)", {".s",}, "/*", "*/", "#",},
-    {"Bison", {".yy,"}, "/*", "*/", NULL,},
+    {"Bison", {".yy",}, "/*", "*/", NULL,},
     {"C", {".c", ".h",}, "/*", "*/", "//",},
     {"C++", {".cc", ".cpp", ".hh", ".hpp"}, "/*", "*/", "//",},
     {"Clojure", {".clj", ".edn",}, NULL, NULL, ";",},
