@@ -1,0 +1,5 @@
+*.o
+sloc
+*.swp
+scanner.c
+parser.{c,h}
